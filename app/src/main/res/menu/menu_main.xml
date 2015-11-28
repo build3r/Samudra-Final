@@ -3,6 +3,18 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="builders.samudra.MainActivity">
     <item
+        android:id="@+id/action_desktop"
+        android:icon="@drawable/desktop"
+        android:title="@string/Desktop"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_record"
+        android:icon="@drawable/stop"
+        android:title="@string/Record"
+        app:showAsAction="always"/>
+
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
