@@ -9,7 +9,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_record"
-        android:icon="@drawable/stop"
+        android:icon="@drawable/record"
         android:title="@string/Record"
         app:showAsAction="always"/>
 

@@ -21,7 +21,7 @@ public class ParseGetData extends AsyncTask<String,Integer,ParseObject>
     protected ParseObject doInBackground(String... params)
     {
         phNumber = Helper.normalizeNumber(params[0]);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("intakeForm");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("DETAILS");
         query.whereEqualTo("mobileNumber", phNumber);
         try
         {
