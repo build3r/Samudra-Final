@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import builders.samudra.MainActivity;
@@ -68,8 +69,8 @@ public class CallListener extends BroadcastReceiver
 
         if(state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_RINGING))
         {
-            Helper.phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            mLog.d("Incomng Number: " +  Helper.phoneNumber);
+            Helper.phoneNumber = Helper.normalizeNumber(bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER));
+            mLog.d("Incoming Number: " +  Helper.phoneNumber);
             String info = "Incoming number: " +  Helper.phoneNumber;
             Toast.makeText(context, info, Toast.LENGTH_LONG).show();
             new ParseGetData().execute(Helper.phoneNumber);
@@ -79,6 +80,8 @@ public class CallListener extends BroadcastReceiver
         if (state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_OFFHOOK))
         {
             mLog.d("Picked Number: " +  Helper.phoneNumber);
+            Helper.PHONE_STATE = state;
+
             String info = "Picked number: " +  Helper.phoneNumber;
             Toast.makeText(context, info, Toast.LENGTH_LONG).show();
             Intent mIntent = new Intent(context,MainActivity.class);
@@ -86,6 +89,14 @@ public class CallListener extends BroadcastReceiver
             Helper.phoneNumber="";
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(mIntent);
+        }
+        else if(state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_IDLE))
+        {
+            Helper.PHONE_STATE = state;
+            Log.d("CallRecorder", "CALL_STATE_IDLE, stopping recording");
+
+            Boolean stopped = context.stopService(new Intent(context, RecorderService.class));
+            Log.i("CallRecorder", "stopService for RecordService returned " + stopped);
         }
     }
 }

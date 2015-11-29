@@ -1,11 +1,14 @@
 package builders.samudra.utils;
 
+import android.telephony.TelephonyManager;
+
 /**
  * Created by Shabaz on 28-Nov-15.
  */
 public class Helper
 {
     public static String phoneNumber = "";
+    public static String PHONE_STATE = TelephonyManager.EXTRA_STATE_IDLE;
     public static String normalizeNumber(String number)
     {
         if (number.startsWith("+91"))
