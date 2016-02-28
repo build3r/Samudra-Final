@@ -1,3 +1,4 @@
+/*
 package builders.samudra.Network;
 
 import android.os.AsyncTask;
@@ -10,36 +11,40 @@ import builders.samudra.utils.Helper;
 import builders.samudra.utils.Logger;
 import de.greenrobot.event.EventBus;
 
+*/
 /**
  * Created by Shabaz on 28-Nov-15.
- */
+ *//*
+
 public class ParseGetData extends AsyncTask<String,Integer,ParseObject>
 {
     Logger mLog = new Logger(ParseGetData.class.getSimpleName());
     String phNumber=Helper.phoneNumber;
-    @Override
-    protected ParseObject doInBackground(String... params)
-    {
-        phNumber = Helper.normalizeNumber(params[0]);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("DETAILS");
-        query.whereEqualTo("mobileNumber", phNumber);
-        try
-        {
-            ParseObject details = query.getFirst();
-            mLog.d("Successful Fetch");
-            mLog.d("Details name = "+details.getString("name"));
-            return details;
 
-        } catch (ParseException e)
-        {
-            mLog.d("UNSuccessful Fetch");
-            //e.printStackTrace();
-            return null;
-        }
+    */
+/**
+     * Runs on the UI thread before {@link #doInBackground}.
+     *
+     * @see #onPostExecute
+     * @see #doInBackground
+     *//*
+
+    @Override
+    protected void onPreExecute()
+    {
+        super.onPreExecute();
 
     }
 
-    /**
+    @Override
+    protected ParseObject doInBackground(String... params)
+    {
+
+
+    }
+
+    */
+/**
      * <p>Runs on the UI thread after {@link #doInBackground}. The
      * specified result is the value returned by {@link #doInBackground}.</p>
      * <p/>
@@ -49,7 +54,8 @@ public class ParseGetData extends AsyncTask<String,Integer,ParseObject>
      * @see #onPreExecute
      * @see #doInBackground
      * @see #onCancelled(Object)
-     */
+     *//*
+
     @Override
     protected void onPostExecute(ParseObject details)
     {
@@ -67,3 +73,4 @@ public class ParseGetData extends AsyncTask<String,Integer,ParseObject>
         }
     }
 }
+*/

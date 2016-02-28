@@ -104,8 +104,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("New Caller");
         etMobileNumber = (EditText) findViewById(R.id.mobile_no_id);
         etName = (EditText) findViewById(R.id.name_id);
+        etName.requestFocus();
         etDob = (EditText) findViewById(R.id.dob_id);
         etEducationQualification = (EditText) findViewById(R.id.education_qual_id);
         etNameOfInstitution = (EditText) findViewById(R.id.institute_id);
@@ -129,23 +131,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         submitButton = (Button) findViewById(R.id.submit_id);
         submitButton.setOnClickListener(this);
         phNumber = getIntent().getStringExtra("NUMBER");
-        EventBus.getDefault().registerSticky(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
     }
 
-    public void onEvent(ParseObject details)
-    {
-        mLog.d("Got Event");
-        //Repeadted Caller
-        mLog.d("Event was ok, Repeated Caller");
-        mTextView.setText(details.getString("mobileNumber") + "  " + details.getString("name"));
-    }
+
 
     public void onEvent(String phNumber)
     {       //New Caller
         mLog.d("Event was null AKA New USER");
-        mTextView.setText("New User " + phNumber);
+        etMobileNumber.setText(phNumber);
     }
 
     public void onEvent(Boolean succesfullySaved)
@@ -189,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             case R.id.action_desktop:
                 //ToDo send What ever filled data to tempTable same as inTake
-                Snackbar.make(findViewById(R.id.new_caller_layout), "Data Sent To DeskTop", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(findViewById(R.id.new_caller_layout), "Data Synced With DeskTop", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 sendFormDataToParse("TEMPCOOR");
                 break;
             case R.id.action_record:
@@ -227,6 +222,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                 }
+                else
+                {
+                    Snackbar.make(findViewById(R.id.new_caller_layout), "No Call In Progress", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
 
 
                 break;
@@ -235,7 +234,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        EventBus.getDefault().registerSticky(this);
+    }
 
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
     @Override
     public void onClick(View v) {
         sendFormDataToParse("DETAILS");

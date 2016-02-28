@@ -14,6 +14,7 @@ public class Application extends android.app.Application
     public void onCreate()
     {
         super.onCreate();
+        Constants.REPEATED = false;
         this.context = this.getApplicationContext();
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);

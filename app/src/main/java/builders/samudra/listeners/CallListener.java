@@ -1,6 +1,7 @@
 package builders.samudra.listeners;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import builders.samudra.MainActivity;
-import builders.samudra.Network.ParseGetData;
+import builders.samudra.utils.Constants;
 import builders.samudra.utils.Helper;
 import builders.samudra.utils.Logger;
 
@@ -59,6 +60,7 @@ public class CallListener extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
+
         Bundle bundle = intent.getExtras();
         if(null == bundle)
             return;
@@ -69,11 +71,22 @@ public class CallListener extends BroadcastReceiver
 
         if(state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_RINGING))
         {
+            Constants.REPEATED = false;
             Helper.phoneNumber = Helper.normalizeNumber(bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER));
             mLog.d("Incoming Number: " +  Helper.phoneNumber);
             String info = "Incoming number: " +  Helper.phoneNumber;
             Toast.makeText(context, info, Toast.LENGTH_LONG).show();
-            new ParseGetData().execute(Helper.phoneNumber);
+            Intent callIntent = new Intent(context, ParseDataService.class);
+
+            callIntent.putExtra("NUMBER", Helper.phoneNumber);
+            ComponentName name = context.startService(callIntent);
+            if (null == name)
+            {
+                Log.e("CallRecorder", "startService for RecordService returned null ComponentName");
+            } else
+            {
+                Log.i("CallRecorder", "startService returned " + name.flattenToString());
+            }
 
         }
         else
@@ -84,11 +97,18 @@ public class CallListener extends BroadcastReceiver
 
             String info = "Picked number: " +  Helper.phoneNumber;
             Toast.makeText(context, info, Toast.LENGTH_LONG).show();
-            Intent mIntent = new Intent(context,MainActivity.class);
-            mIntent.putExtra("NUMBER", Helper.phoneNumber);
-            Helper.phoneNumber="";
-            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(mIntent);
+            if(!Constants.REPEATED)
+            {
+                Intent mIntent = new Intent(context, MainActivity.class);
+                mIntent.putExtra("NUMBER", Helper.phoneNumber);
+                Helper.phoneNumber = "";
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(mIntent);
+            }
+            else {
+                context.stopService(new Intent(context, ParseDataService.class));
+                Constants.REPEATED = false;
+            }
         }
         else if(state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_IDLE))
         {

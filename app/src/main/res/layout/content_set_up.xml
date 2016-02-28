@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="builders.samudra.SetUp"
+    tools:showIn="@layout/activity_set_up">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Set Up"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:inputType="textPersonName"
+        android:hint="Your Name"
+        android:ems="10"
+        android:textSize="25sp"
+        android:id="@+id/set_up_name"
+        android:gravity="center"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/style"
+        android:layout_marginTop="110dp"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:inputType="phone"
+        android:hint="Mobile Number"
+        android:ems="10"
+        android:textSize="25sp"
+        android:id="@+id/set_up_number"
+        android:gravity="center"
+        android:layout_below="@+id/set_up_name"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/style"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:id="@+id/continue_button"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/set_up_number"
+        android:layout_marginTop="38dp"
+        android:layout_alignLeft="@+id/set_up_number"
+        android:layout_alignStart="@+id/set_up_number"
+        android:layout_alignRight="@+id/set_up_number"
+        android:layout_alignEnd="@+id/set_up_number"/>
+</RelativeLayout>

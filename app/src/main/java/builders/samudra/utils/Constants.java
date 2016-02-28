@@ -8,4 +8,5 @@ import android.os.Environment;
 public class Constants
 {
     public static final String DEFAULT_STORAGE_LOCATION = Environment.getExternalStorageDirectory() +"/CallRecords";
+    public static boolean REPEATED = false;
 }
