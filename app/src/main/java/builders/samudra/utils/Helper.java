@@ -2,6 +2,8 @@ package builders.samudra.utils;
 
 import android.telephony.TelephonyManager;
 
+import java.util.UUID;
+
 /**
  * Created by Shabaz on 28-Nov-15.
  */
@@ -21,5 +23,9 @@ public class Helper
         }
         number = number.replaceAll(" ","").replaceAll("-", "");
         return number;
+    }
+
+    public static String generateUniqueKey() {
+        return UUID.randomUUID().toString();
     }
 }
